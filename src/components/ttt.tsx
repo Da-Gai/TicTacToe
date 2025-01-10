@@ -67,7 +67,7 @@ else{
         setLock(false);
         data=["","","","","","","","",""];
         if (titleRef.current) {
-          titleRef.current.innerHTML = ``;
+          titleRef.current.innerHTML = `Tic Tac Toe in <span>REACT</span>`;
       }
         boxArray.map((e)=>{
           if(e.current)
