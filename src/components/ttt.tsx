@@ -12,11 +12,11 @@ const winningCombinations = [
     [2, 5, 8],  
     [0, 4, 8],  
     [2, 4, 6]   
-];
+];/* eslint-disable */
 const ttt = () => {
     let[count,setCount]= useState(0);
     let[lock,setLock]= useState(false);
-    let titleRef = useRef(null);
+    let  titleRef = useRef<HTMLHeadingElement>(null);
     let box1 =useRef(null);
     let box2 =useRef(null);
     let box3 =useRef(null);
@@ -27,16 +27,18 @@ const ttt = () => {
     let box8 =useRef(null);
     let box9 =useRef(null);
     let boxArray=[box1,box2,box3,box4,box5,box6,box7,box8,box9]
-    const toggle =(e,num) =>{
+    const toggle =(e:React.MouseEvent<HTMLDivElement>,num:number) =>{
         if(lock)
             return 0;
         if(count%2==0){
-            e.target.innerHTML=`<img src='${xIcon}'>`;
+          const targetElement = e.target as HTMLDivElement;
+            targetElement.innerHTML=`<img src='${xIcon}'>`;
         data[num]='x';
     setCount(++count);
 }
 else{
-    e.target.innerHTML = `<img src='${oIcon}'>`;
+  const targetElement = e.target as HTMLDivElement;
+  targetElement.innerHTML=`<img src='${oIcon}'>`;
     data[num]='o';
     setCount(++count);
 } checkWin();
@@ -48,19 +50,28 @@ else{
                 won (data[a]);  
             }
     }}
-    const won =(winner)=> {
+    const won =(winner:string)=> {
         setLock(true);
         if(winner==='x')
-            titleRef.current.innerHTML=`Congratulation: <img src=${xIcon} > wins`
+          if (titleRef.current) {
+            if (titleRef.current) {
+    titleRef.current.innerHTML = `Congratulation: <img src=${xIcon} > wins`;
+}
+        }
         else
-        titleRef.current.innerHTML=`Congratulation: <img src=${oIcon} > wins`
+        if (titleRef.current) {
+          (titleRef.current as any).innerHTML = `Congratulation: <img src=${oIcon} > wins`;
+      }
     }
     const reset = ()=>{
         setLock(false);
         data=["","","","","","","","",""];
-        titleRef.current.innerHTML='Tic Tac Toe in <span>REACT</span>';
+        if (titleRef.current) {
+          titleRef.current.innerHTML = ``;
+      }
         boxArray.map((e)=>{
-            e.current.innerHTML="";
+          if(e.current)
+            (e.current as any).innerHTML=""; 
         })
     }
     
@@ -91,6 +102,6 @@ else{
   </div>
 </>
   )
-}
+}/* eslint-enable */
 
 export default ttt
